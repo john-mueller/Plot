@@ -128,6 +128,13 @@ final class HTMLTests: XCTestCase {
         """)
     }
 
+    func testAtomFeedLink() {
+        let html = HTML(.head(.atomFeedLink("atom.xml", title: "Atom")))
+        assertEqualHTMLContent(html, """
+        <head><link rel="alternate" href="atom.xml" type="application/atom+xml" title="Atom"/></head>
+        """)
+    }
+
     func testLinkWithHrefLang() {
         let html = HTML(.head(.link(
             .rel(.alternate),
@@ -686,6 +693,7 @@ extension HTMLTests {
             ("testStaticViewport", testStaticViewport),
             ("testFavicon", testFavicon),
             ("testRSSFeedLink", testRSSFeedLink),
+            ("testAtomFeedLink", testAtomFeedLink),
             ("testLinkWithHrefLang", testLinkWithHrefLang),
             ("testAppleTouchIconLink", testAppleTouchIconLink),
             ("testManifestLink", testManifestLink),

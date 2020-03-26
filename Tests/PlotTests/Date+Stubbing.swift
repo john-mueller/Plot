@@ -9,6 +9,7 @@ import XCTest
 extension Date {
     enum FormattingStyle {
         case rss
+        case atom
         case siteMap
     }
 
@@ -42,6 +43,8 @@ private extension Date.FormattingStyle {
         switch self {
         case .rss:
             return "Thu, 17 Oct 2019 10:15:05 +0100"
+        case .atom:
+            return "2019-10-17T10:15:05+01:00"
         case .siteMap:
             return "2019-10-17"
         }

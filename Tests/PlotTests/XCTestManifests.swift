@@ -8,6 +8,7 @@ import XCTest
 
 public func allTests() -> [Linux.TestCase] {
     return [
+        Linux.makeTestCase(using: AtomTests.allTests),
         Linux.makeTestCase(using: ControlFlowTests.allTests),
         Linux.makeTestCase(using: DocumentTests.allTests),
         Linux.makeTestCase(using: HTMLTests.allTests),

@@ -219,3 +219,74 @@ private func assertEqualRSSFeedContent<R: Renderable>(
         line: line
     )
 }
+
+func assertEqualAtomFeedContent(
+    _ feed: Atom,
+    _ content: String,
+    file: StaticString = #file,
+    line: UInt = #line
+) {
+    assertEqualAtomFeedContent(
+        feed,
+        content,
+        type: "Atom",
+        namespaces: [
+            (nil, "http://www.w3.org/2005/Atom"),
+        ],
+        file: file,
+        line: line
+    )
+}
+
+private func assertEqualAtomFeedContent<R: Renderable>(
+    _ feed: R,
+    _ content: String,
+    type: String,
+    namespaces: [(name: String?, url: String)],
+    file: StaticString,
+    line: UInt
+) {
+    let xmlDeclaration = XML().render()
+
+    let namespaces = namespaces.map({ name, url in
+        let name = name.map { ":" + $0 } ?? ""
+        return "xmlns\(name)=\"\(url)\""
+    }).joined(separator: " ")
+
+    let expectedPrefix = "\(xmlDeclaration)<feed \(namespaces)>"
+    let expectedSuffix = "</feed>"
+
+    let xml = feed.render()
+
+    XCTAssertTrue(
+        xml.hasPrefix(expectedPrefix),
+        """
+        Invalid \(type) feed prefix.
+        Expected '\(expectedPrefix)'.
+        Found '\(xml.prefix(expectedPrefix.count))'.
+        """,
+        file: file,
+        line: line
+    )
+
+    XCTAssertTrue(
+        xml.hasSuffix(expectedSuffix),
+        """
+        \(type.capitalized) feed is not closed with '\(expectedSuffix)'.
+        Feed: '\(xml)'
+        """,
+        file: file,
+        line: line
+    )
+
+    let expectedContent = xml
+        .dropFirst(expectedPrefix.count)
+        .dropLast(expectedSuffix.count)
+
+    XCTAssertEqual(
+        String(expectedContent),
+        content,
+        file: file,
+        line: line
+    )
+}

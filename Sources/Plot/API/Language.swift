@@ -6,7 +6,7 @@
 
 // Enum defining language codes according to the ISO 639 standard,
 // which can be used to specify the primary language of an HTML,
-// RSS or PodcastFeed document.
+// RSS, Atom, or PodcastFeed document.
 public enum Language: String {
     case abkhazian = "ab"
     case afar = "aa"

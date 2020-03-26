@@ -13,7 +13,7 @@
     </a>
 </p>
 
-Welcome to **Plot**, a domain-specific language (DSL) for writing type-safe HTML, XML and RSS in Swift. It can be used to build websites, documents and feeds, as a templating tool, or as a renderer for higher-level components and tools. It’s primary focus is on static site generation and Swift-based web development.
+Welcome to **Plot**, a domain-specific language (DSL) for writing type-safe HTML, XML, RSS, and Atom in Swift. It can be used to build websites, documents and feeds, as a templating tool, or as a renderer for higher-level components and tools. It’s primary focus is on static site generation and Swift-based web development.
 
 Plot is used to build and render all of [swiftbysundell.com](https://swiftbysundell.com).
 
@@ -283,9 +283,9 @@ let string = header.render()
 
 Plot was built with performance in mind, so regardless of how you render a document, the goal is for that rendering process to be as fast as possible — with very limited node tree traversal and as little string copying and interpolation as possible.
 
-## RSS feeds, podcasting, and site maps
+## RSS and Atom feeds, podcasting, and site maps
 
-Besides HTML and free-form XML, Plot also ships with DSL APIs for constructing RSS and podcast feeds, as well as SiteMap XMLs for search engine indexing.
+Besides HTML and free-form XML, Plot also ships with DSL APIs for constructing RSS, Atom, and podcast feeds, as well as SiteMap XMLs for search engine indexing.
 
 While these APIs are most likely only relevant when building tools and custom generators (the upcoming static site generator Publish includes implementations of all of these formats), they provide the same level of type safety as when building HTML pages using Plot:
 
@@ -297,6 +297,8 @@ let rss = RSS(
         .link("https://mysite.com/post")
     )
 )
+
+// TODO: add example here
 
 let podcastFeed = PodcastFeed(
     .title("My podcast"),
@@ -355,7 +357,7 @@ Plot consists of four core parts, that together make up both its DSL and its ove
 - [`Node`](Sources/Plot/API/Node.swift) is the core building block for all elements and attributes within any Plot document. It can represent elements and attributes, as well as text content and groups of nodes. Each node is bound to a `Context` type, which determines which kind of DSL APIs that it gets access to (for example `HTML.BodyContext` for nodes placed within the `<body>` of an HTML page).
 - [`Element`](Sources/Plot/API/Element.swift) represents an element, and can either be opened and closed using two separate tags (like `<body></body>`) or self-closed (like `<img/>`). You normally don’t have to interact with this type when using Plot, since you can create instances of it through its DSL.
 - [`Attribute`](Sources/Plot/API/Attribute.swift) represents an attribute attached to an element, such as the `href` of an `<a>` element, or the `src` of an `<img>` element. You can either construct `Attribute` values through its initializer, or through the DSL, using the `.attribute()` command.
-- [`Document` and `DocumentFormat`](Sources/Plot/API/Document.swift) represent documents of a given format, such as `HTML`, `RSS` and `PodcastFeed`. These are the top level types that you use in order to start a document building session using Plot’s DSL.
+- [`Document` and `DocumentFormat`](Sources/Plot/API/Document.swift) represent documents of a given format, such as `HTML`, `RSS`, `Atom`, and `PodcastFeed`. These are the top level types that you use in order to start a document building session using Plot’s DSL.
 
 Plot makes heavy use of a technique known as *[Phantom Types](https://www.swiftbysundell.com/articles/phantom-types-in-swift)*, which is when types are used as “markers” for the compiler, to be able to enforce type safety through [generic constraints](https://www.swiftbysundell.com/articles/using-generic-type-constraints-in-swift-4). Both `DocumentFormat`, and the `Context` of a node, element or attribute, are used this way — as these types are never instantiated, but rather just there to associate their values with a given context or format.
 
@@ -370,6 +372,7 @@ The following standards are intended to be covered by Plot’s DSL:
 - [HTML 5.0](https://html.spec.whatwg.org)
 - [XML 1.0](https://www.w3.org/TR/REC-xml)
 - [RSS 2.0](https://validator.w3.org/feed/docs/rss2.html)
+- [Atom 1.0](https://validator.w3.org/feed/docs/atom.html)
 - [Apple’s RSS extensions for podcasts](https://help.apple.com/itc/podcasts_connect/#/itcbaf351599)
 - [The Sitemaps XML format](https://www.sitemaps.org/protocol.html)
 
@@ -381,7 +384,7 @@ Plot was originally written by [John Sundell](https://twitter.com/johnsundell) a
 
 The idea of using Swift to generate HTML has also been explored by many other people and projects in the community, some of them similar to Plot, some of them completely different. For example [Leaf](https://github.com/vapor/leaf) by [Vapor](https://vapor.codes), [swift-html](https://github.com/pointfreeco/swift-html) by [Point-Free](https://www.pointfree.co), and the [Swift Talk backend](https://github.com/objcio/swift-talk-backend) by [objc.io](https://www.objc.io). The fact that there’s a lot of simultaneous innovation within this area is a great thing — since all of these tools (including Plot) have made different decisions around their overall API design and scope, which lets each developer pick the tool that best fits their individual taste and needs (or perhaps build yet another one?).
 
-Plot’s main focus is on Swift-based static site generation, and on supporting a wide range of formats used when building websites, including RSS and podcast feeds. It’s also tightly integrated with the [Publish static site generator](https://github.com/JohnSundell/Publish), and was built to enable Publish to be as fast and flexible as possible, without having to take on any third-party dependencies. It was open sourced as a separate project both from an architectural perspective, and to enable other tools to be built on top of it without having to depend on Publish.
+Plot’s main focus is on Swift-based static site generation, and on supporting a wide range of formats used when building websites, including RSS, Atom, and podcast feeds. It’s also tightly integrated with the [Publish static site generator](https://github.com/JohnSundell/Publish), and was built to enable Publish to be as fast and flexible as possible, without having to take on any third-party dependencies. It was open sourced as a separate project both from an architectural perspective, and to enable other tools to be built on top of it without having to depend on Publish.
 
 ## Contributions and support
 

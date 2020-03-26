@@ -45,7 +45,7 @@ For each document type, for example `HTML`, there are several key files in which
 - The attributes file, `HTMLAttributes`, defines all DSL APIs for constructing attributes for elements of that format.
 - Finally, the components file, `HTMLComponents`, defines higher-level components that are compositions of elements and attributes.
 
-*The same structure is also used for all other document formats — `XML`, `RSS`, `PodcastFeed`, and `SiteMap`.*
+*The same structure is also used for all other document formats — `XML`, `RSS`, `Atom`,  `PodcastFeed`, and `SiteMap`.*
 
 ## Unit testing
 

@@ -112,4 +112,13 @@ public extension Node where Context == HTML.HeadContext {
             .attribute(named: "title", value: title)
         )
     }
+
+    static func atomFeedLink(_ url: URLRepresentable, title: String? = nil) -> Node {
+        .link(
+            .rel(.alternate),
+            .href(url.string),
+            .type("application/atom+xml"),
+            .attribute(named: "title", value: title)
+        )
+    }
 }
